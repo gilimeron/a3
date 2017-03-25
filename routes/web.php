@@ -11,6 +11,13 @@
 |
 */
 
+# /routes/web.php
+Route::get('/', 'BillSplitterController@calculate');
 
-
-Route::get('/', 'BillSplitterController@index');
+/**
+* Log viewer
+* (only accessible locally)
+*/
+if(config('app.env') == 'local') {
+    Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
+}

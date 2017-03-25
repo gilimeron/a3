@@ -17,7 +17,7 @@
 <body>
 
     <header>
-        
+
     </header>
 
     <section>
@@ -28,8 +28,5 @@
 
 
     @stack('body')
-    <footer>
-        &copy; Gili Meron {{ date('Y') }}
-    </footer>
 </body>
 </html>

@@ -21,7 +21,7 @@ class BillSplitterController extends Controller {
 
         # If form was submitted then validate
 
-        if ($_GET) {
+        if (($request->getRequestUri()) != "/") {
 
             # Validate
             $this->validate($request, [

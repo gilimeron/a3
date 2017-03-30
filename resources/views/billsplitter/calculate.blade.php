@@ -9,10 +9,10 @@
 @section('content')
 
     <div class="container" id='border'>
-
+        <img src="images/billsplitter.jpg" alt="billimg">
         <h1>Bill Splitter</h1>
         <p> This is a bill splitter calculator. Choose how many ways to split it and choose the bill total. </p>
-        <p> You can also rank the service (suggseted tip would change accordingly, and wether to round the amount or not).</p><br><br>
+        <p> You can also rank the service (suggseted tip would change accordingly, and wether to round the amount or not).</p>
 
         <form method='GET' action='/' class="form-horizontal">
 
@@ -23,8 +23,6 @@
                     * required
                 </div>
             </div>
-
-
 
             <div class="form-group">
                 <label for='billSum' class="control-label col-sm-2">How much was the tab?</label>

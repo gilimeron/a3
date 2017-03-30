@@ -12,7 +12,7 @@
         <img src="images/billsplitter.jpg" alt="billimg">
         <h1>Bill Splitter</h1>
         <p> This is a bill splitter calculator. Choose how many ways to split it and choose the bill total. </p>
-        <p> You can also rank the service (suggseted tip would change accordingly, and wether to round the amount or not).</p>
+        <p> You can also rank the service (suggseted tip would change accordingly), and wether to round up the amount or not.</p>
 
         <form method='GET' action='/' class="form-horizontal">
 
@@ -56,22 +56,23 @@
                 </div>
             </div>
         </form>
+        @if(count($errors) > 0)
+            <div class='alert alert-danger'>
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+
+        @elseif ($dividedBill > 0)
+            <div class="alert alert-success" role="alert">
+                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                Everyone owes $<?=$dividedBill?> . Recommended tip is %<?=$recommendedTip?>, that means that each individual should put $<?=$personalTip?> as tip
+            </div>
+        @endif
     </div>
 
-    @if(count($errors) > 0)
-        <div class='alert alert-danger'>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
 
-    @elseif ($dividedBill > 0)
-        <div class="alert alert-success" role="alert">
-            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-            Everyone owes $<?=$dividedBill?> . Recommended tip is %<?=$recommendedTip?>, that means that each individual should put $<?=$personalTip?> as tip
-        </div>
-    @endif
 
 @endsection

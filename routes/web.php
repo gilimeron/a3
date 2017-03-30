@@ -12,7 +12,7 @@
 */
 
 # /routes/web.php
-Route::get('/', 'BillSplitterController@calculate');
+Route::get('/', 'BillSplitterController@calculateBill');
 
 /**
 * Log viewer

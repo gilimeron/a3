@@ -7,19 +7,7 @@ use Illuminate\Http\Request;
 
 class BillSplitterController extends Controller {
 
-    /**
-    * GET /
-    */
-
-    public function index() {
-        return view('billsplitter.show');
-    }
-
-
-    /**
-    * GET /
-    */
-    public function calculate(Request $request) {
+    public function calculateBill(Request $request) {
 
         $dividedBill = 0;
         $recommendedTip = 15;
@@ -31,16 +19,17 @@ class BillSplitterController extends Controller {
         $roundUp = $request->input('roundUp', null);
         $serviceScore = $request->input('serviceScore', null);
 
-        # Proceed to validate and calculate only if there are variables
-        if($pplCount and $billSum) {
+        # If form was submitted then validate
+
+        if ($_GET) {
 
             # Validate
             $this->validate($request, [
-                  'pplCount' => 'required|numeric|between:1,1000',
+                  'pplCount' => 'required|numeric|between:1,100',
                   'billSum' => 'required|numeric|between:1,3000',
               ]);
 
-            #calculate bill
+            #Proceed to alculate bill with or without round up
             if($roundUp) {
                 $dividedBill = ceil($billSum/$pplCount);
             }
@@ -48,7 +37,7 @@ class BillSplitterController extends Controller {
                 $dividedBill = number_format(($billSum/$pplCount),2);
             }
 
-            #calculate tip
+            #calculate tip based on service score
             switch ($serviceScore)  {
                 case "bad":
                     $recommendedTip = 12;
@@ -69,8 +58,8 @@ class BillSplitterController extends Controller {
 
         }
 
-        # Return the view, with the searchTerm *and* searchResults (if any)
-        return view('billsplitter.show')->with([
+        # Return the view with the user's input and the calculation results
+        return view('billsplitter.calculate')->with([
             'pplCount' => $pplCount,
             'billSum' => $billSum,
             'roundUp' => $request->has('roundUp'),

@@ -1,0 +1,35 @@
+body {
+    padding:25px;
+}
+
+footer {
+    margin-top:50px;
+}
+.alert, .btn {
+    margin-top:10px;
+}
+
+#border {
+  border: 2px solid;
+  border-radius: 5px;
+
+}
+.alert-success  {
+  text-align: center;
+}
+h1  {
+  text-align: center;
+}
+label, legend, .form-horizontal .control-label {
+    display:block;
+    padding-top: 0px;
+}
+
+input, textarea, select {
+    display:block;
+}
+
+input[type="checkbox"] {
+  display: inline-block;
+  margin-left: 15px;
+}

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class BillSplitterController extends Controller {
 
@@ -20,13 +21,14 @@ class BillSplitterController extends Controller {
         $serviceScore = $request->input('serviceScore', null);
 
         # If form was submitted then validate
-
         if (($request->getRequestUri()) != "/") {
 
             # Validate
             $this->validate($request, [
                   'pplCount' => 'required|numeric|between:1,100',
                   'billSum' => 'required|numeric|between:1,3000',
+                  'serviceScore' => Rule::in(['','bad','average','good','excellent']),
+                  'roundUp' => Rule::in(['','on'])
               ]);
 
             #Proceed to alculate bill with or without round up

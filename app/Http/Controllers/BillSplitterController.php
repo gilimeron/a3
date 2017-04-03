@@ -11,27 +11,29 @@ class BillSplitterController extends Controller {
     public function calculateBill(Request $request) {
 
         $dividedBill = 0;
-        $recommendedTip = 15;
+
+        #If service score wasn't selected then default to 18% tip
+        $recommendedTip = 18;
         $personalTip = 0;
 
-        # Store the inputs in variables
+        #Store the inputs in variables
         $pplCount = $request->input('pplCount', null);
         $billSum = $request->input('billSum', null);
         $roundUp = $request->input('roundUp', null);
         $serviceScore = $request->input('serviceScore', null);
 
-        # If form was submitted then validate
+        #Check if form was submitted before priceeding to validation
         if (($request->getRequestUri()) != "/") {
 
-            # Validate
+            #Validate input fields
             $this->validate($request, [
                   'pplCount' => 'required|numeric|between:1,100',
                   'billSum' => 'required|numeric|between:1,3000',
                   'serviceScore' => Rule::in(['','bad','average','good','excellent']),
                   'roundUp' => Rule::in(['','on'])
-              ]);
+            ]);
 
-            #Proceed to alculate bill with or without round up
+            #Proceed to calculate bill with or without round up
             if($roundUp) {
                 $dividedBill = ceil($billSum/$pplCount);
             }
@@ -42,25 +44,25 @@ class BillSplitterController extends Controller {
             #calculate tip based on service score
             switch ($serviceScore)  {
                 case "bad":
-                    $recommendedTip = 12;
-                    break;
-                case "average":
                     $recommendedTip = 15;
                     break;
-                case "good":
+                case "average":
                     $recommendedTip = 18;
                     break;
-                case "excellent":
+                case "good":
                     $recommendedTip = 20;
+                    break;
+                case "excellent":
+                    $recommendedTip = 22;
                     break;
             }
 
-            #calculate tip per person
+            #Calculate tip per person
                 $personalTip = $recommendedTip/100 * $dividedBill;
 
         }
 
-        # Return the view with the user's input and the calculation results
+        #Return the view with the user's input and the calculation results
         return view('billsplitter.calculate')->with([
             'pplCount' => $pplCount,
             'billSum' => $billSum,
